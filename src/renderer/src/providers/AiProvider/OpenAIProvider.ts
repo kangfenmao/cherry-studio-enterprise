@@ -464,7 +464,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
         // @ts-ignore key is not typed
         .create(
           {
-            model: model.id,
+            model: this.getModelId(model),
             messages: reqMessages,
             temperature: this.getTemperature(assistant, model),
             top_p: this.getTopP(assistant, model),
@@ -883,7 +883,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
       // @ts-ignore key is not typed
       .create(
         {
-          model: model.id,
+          model: this.getModelId(model),
           messages: reqMessages,
           temperature: this.getTemperature(assistant, model),
           top_p: this.getTopP(assistant, model),
@@ -943,7 +943,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
     // console.debug('[translate] reqMessages', model.id, message)
     // @ts-ignore key is not typed
     const response = await this.sdk.chat.completions.create({
-      model: model.id,
+      model: this.getModelId(model),
       messages: messagesForApi as ChatCompletionMessageParam[],
       stream,
       keep_alive: this.keepAliveTime,
@@ -1021,7 +1021,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
     await this.checkIsCopilot()
 
     const params = {
-      model: model.id,
+      model: this.getModelId(model),
       messages: [systemMessage, userMessage] as ChatCompletionMessageParam[],
       stream: false,
       keep_alive: this.keepAliveTime,
@@ -1073,7 +1073,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
       // @ts-ignore key is not typed
       .create(
         {
-          model: model.id,
+          model: this.getModelId(model),
           messages: [systemMessage, userMessage] as ChatCompletionMessageParam[],
           stream: false,
           keep_alive: this.keepAliveTime,
@@ -1105,7 +1105,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
     await this.checkIsCopilot()
 
     const response = await this.sdk.chat.completions.create({
-      model: model.id,
+      model: this.getModelId(model),
       stream: false,
       messages: [
         { role: 'system', content: prompt },
@@ -1143,7 +1143,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
       path: '/advice_questions',
       body: {
         messages: userMessagesForApi,
-        model: model.id,
+        model: this.getModelId(model),
         max_tokens: 0,
         temperature: 0,
         n: 0
@@ -1165,7 +1165,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
     }
 
     const body: any = {
-      model: model.id,
+      model: this.getModelId(model),
       messages: [{ role: 'user', content: 'hi' }],
       stream
     }
@@ -1259,7 +1259,7 @@ export default class OpenAIProvider extends BaseOpenAIProvider {
 
     try {
       const data = await this.sdk.embeddings.create({
-        model: model.id,
+        model: this.getModelId(model),
         input: model?.provider === 'baidu-cloud' ? ['hi'] : 'hi',
         encoding_format: 'float'
       })

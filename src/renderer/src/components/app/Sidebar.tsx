@@ -122,7 +122,7 @@ const Sidebar: FC = () => {
           <StyledLink
             onClick={async () => {
               hideMinappPopup()
-              await to('/settings/provider')
+              await to('/settings/general')
             }}>
             <Icon theme={theme} className={pathname.startsWith('/settings') && !minappShow ? 'active' : ''}>
               <Settings size={20} className="icon" />
@@ -166,7 +166,9 @@ const MainMenus: FC = () => {
     files: '/files'
   }
 
-  return sidebarIcons.visible.map((icon) => {
+  const visibleIcons = sidebarIcons.visible.filter((icon) => icon !== 'paintings')
+
+  return visibleIcons.map((icon) => {
     const path = pathMap[icon]
     const isActive = path === '/' ? isRoute(path) : isRoutes(path)
 
