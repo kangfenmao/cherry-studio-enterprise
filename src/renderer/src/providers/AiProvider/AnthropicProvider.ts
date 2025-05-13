@@ -260,7 +260,7 @@ export default class AnthropicProvider extends BaseProvider {
     }
 
     const body: MessageCreateParamsNonStreaming = {
-      model: model.id,
+      model: this.getModelId(model),
       messages: userMessages,
       max_tokens: maxTokens || DEFAULT_MAX_TOKENS,
       temperature: this.getTemperature(assistant, model),
@@ -507,7 +507,7 @@ export default class AnthropicProvider extends BaseProvider {
     const stream = !!onResponse
 
     const body: MessageCreateParamsNonStreaming = {
-      model: model.id,
+      model: this.getModelId(model),
       messages: messagesForApi,
       max_tokens: 4096,
       temperature: assistant?.settings?.temperature,
@@ -573,7 +573,7 @@ export default class AnthropicProvider extends BaseProvider {
 
     const message = await this.sdk.messages.create({
       messages: [userMessage] as Anthropic.Messages.MessageParam[],
-      model: model.id,
+      model: this.getModelId(model),
       system: systemMessage.content,
       stream: false,
       max_tokens: 4096
@@ -607,7 +607,7 @@ export default class AnthropicProvider extends BaseProvider {
       .create(
         {
           messages: [userMessage],
-          model: model.id,
+          model: this.getModelId(model),
           system: systemMessage.content,
           stream: false,
           max_tokens: 4096
@@ -629,7 +629,7 @@ export default class AnthropicProvider extends BaseProvider {
     const model = getDefaultModel()
 
     const message = await this.sdk.messages.create({
-      model: model.id,
+      model: this.getModelId(model),
       system: prompt,
       stream: false,
       max_tokens: 4096,
@@ -676,7 +676,7 @@ export default class AnthropicProvider extends BaseProvider {
     }
 
     const body = {
-      model: model.id,
+      model: this.getModelId(model),
       messages: [{ role: 'user' as const, content: 'hi' }],
       max_tokens: 100,
       stream

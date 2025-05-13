@@ -43,7 +43,10 @@ import XirangProviderLogo from '@renderer/assets/images/providers/xirang.png'
 import ZeroOneProviderLogo from '@renderer/assets/images/providers/zero-one.png'
 import ZhipuProviderLogo from '@renderer/assets/images/providers/zhipu.png'
 
+import { AppLogo } from './env'
+
 const PROVIDER_LOGO_MAP = {
+  'cherry-enterprise': AppLogo,
   openai: OpenAiProviderLogo,
   silicon: SiliconFlowProviderLogo,
   deepseek: DeepSeekProviderLogo,
@@ -99,6 +102,17 @@ export function getProviderLogo(providerId: string) {
 export const NOT_SUPPORTED_REANK_PROVIDERS = ['ollama']
 
 export const PROVIDER_CONFIG = {
+  'cherry-enterprise': {
+    api: {
+      url: 'https://api.cherry-ai.com'
+    },
+    websites: {
+      official: 'https://emb.cherry-ai.com/',
+      apiKey: 'https://emb.cherry-ai.com/',
+      docs: 'https://docs.cherry-ai.com/',
+      models: 'https://emb.cherry-ai.com/models'
+    }
+  },
   openai: {
     api: {
       url: 'https://api.openai.com'

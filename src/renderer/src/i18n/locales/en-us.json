@@ -102,6 +102,7 @@
       "get_key": "Get",
       "get_key_success": "API key automatically obtained successfully",
       "login": "Login",
+      "logout": "Logout",
       "oauth_button": "Auth with {{provider}}"
     },
     "backup": {
@@ -837,6 +838,7 @@
       "title": "You are an assistant who is good at conversation. You need to summarize the user's conversation into a title of 10 characters or less, ensuring it matches the user's primary language without using punctuation or other special symbols."
     },
     "provider": {
+      "cherry-enterprise": "Cherry Enterprise",
       "aihubmix": "AiHubMix",
       "alayanew": "Alaya NeW",
       "anthropic": "Anthropic",

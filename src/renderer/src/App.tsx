@@ -8,6 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import Sidebar from './components/app/Sidebar'
 import TopViewContainer from './components/TopView'
 import AntdProvider from './context/AntdProvider'
+import AuthProvider from './context/AuthProvider'
 import StyleSheetManager from './context/StyleSheetManager'
 import { SyntaxHighlighterProvider } from './context/SyntaxHighlighterProvider'
 import { ThemeProvider } from './context/ThemeProvider'
@@ -30,20 +31,22 @@ function App(): React.ReactElement {
             <SyntaxHighlighterProvider>
               <PersistGate loading={null} persistor={persistor}>
                 <TopViewContainer>
-                  <HashRouter>
-                    <NavigationHandler />
-                    <Sidebar />
-                    <Routes>
-                      <Route path="/" element={<HomePage />} />
-                      <Route path="/agents" element={<AgentsPage />} />
-                      <Route path="/paintings/*" element={<PaintingsRoutePage />} />
-                      <Route path="/translate" element={<TranslatePage />} />
-                      <Route path="/files" element={<FilesPage />} />
-                      <Route path="/knowledge" element={<KnowledgePage />} />
-                      <Route path="/apps" element={<AppsPage />} />
-                      <Route path="/settings/*" element={<SettingsPage />} />
-                    </Routes>
-                  </HashRouter>
+                  <AuthProvider>
+                    <HashRouter>
+                      <NavigationHandler />
+                      <Sidebar />
+                      <Routes>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/agents" element={<AgentsPage />} />
+                        <Route path="/paintings/*" element={<PaintingsRoutePage />} />
+                        <Route path="/translate" element={<TranslatePage />} />
+                        <Route path="/files" element={<FilesPage />} />
+                        <Route path="/knowledge" element={<KnowledgePage />} />
+                        <Route path="/apps" element={<AppsPage />} />
+                        <Route path="/settings/*" element={<SettingsPage />} />
+                      </Routes>
+                    </HashRouter>
+                  </AuthProvider>
                 </TopViewContainer>
               </PersistGate>
             </SyntaxHighlighterProvider>

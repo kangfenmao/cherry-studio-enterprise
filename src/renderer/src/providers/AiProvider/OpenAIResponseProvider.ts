@@ -338,7 +338,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
         // @ts-ignore key is not typed
         .create(
           {
-            model: model.id,
+            model: this.getModelId(model),
             messages: reqMessages,
             stream: true,
             temperature: this.getTemperature(assistant, model),
@@ -497,7 +497,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
       onChunk({ type: ChunkType.LLM_RESPONSE_CREATED })
       const stream = await this.sdk.responses.create(
         {
-          model: model.id,
+          model: this.getModelId(model),
           input: reqMessages,
           temperature: this.getTemperature(assistant, model),
           top_p: this.getTopP(assistant, model),
@@ -787,7 +787,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
     const start_time_millsec = new Date().getTime()
     const stream = await this.sdk.responses.create(
       {
-        model: model.id,
+        model: this.getModelId(model),
         input: reqMessages,
         temperature: this.getTemperature(assistant, model),
         top_p: this.getTopP(assistant, model),
@@ -852,7 +852,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
     let text = ''
     if (stream) {
       const response = await this.sdk.responses.create({
-        model: model.id,
+        model: this.getModelId(model),
         input: messageForApi,
         stream: true,
         temperature: this.getTemperature(assistant, model),
@@ -873,7 +873,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
       }
     } else {
       const response = await this.sdk.responses.create({
-        model: model.id,
+        model: this.getModelId(model),
         input: messageForApi,
         stream: false,
         temperature: this.getTemperature(assistant, model),
@@ -916,7 +916,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
     }
 
     const response = await this.sdk.responses.create({
-      model: model.id,
+      model: this.getModelId(model),
       input: [systemMessage, userMessage],
       stream: false,
       max_output_tokens: 1000
@@ -948,7 +948,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
     const response = await this.sdk.responses
       .create(
         {
-          model: model.id,
+          model: this.getModelId(model),
           input: [systemMessage, userMessage],
           stream: false,
           max_output_tokens: 1000
@@ -988,7 +988,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
       path: '/advice_questions',
       body: {
         messages: userMessagesForApi,
-        model: model.id,
+        model: this.getModelId(model),
         max_tokens: 0,
         temperature: 0,
         n: 0
@@ -1007,7 +1007,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
   public async generateText({ prompt, content }: { prompt: string; content: string }): Promise<string> {
     const model = getDefaultModel()
     const response = await this.sdk.responses.create({
-      model: model.id,
+      model: this.getModelId(model),
       stream: false,
       input: [
         { role: 'system', content: prompt },
@@ -1029,7 +1029,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
     }
     if (stream) {
       const response = await this.sdk.responses.create({
-        model: model.id,
+        model: this.getModelId(model),
         input: [{ role: 'user', content: 'hi' }],
         stream: true
       })
@@ -1045,7 +1045,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
       throw new Error('Empty streaming response')
     } else {
       const response = await this.sdk.responses.create({
-        model: model.id,
+        model: this.getModelId(model),
         input: [{ role: 'user', content: 'hi' }],
         stream: false
       })
@@ -1171,7 +1171,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
       if (images.length > 0) {
         response = await this.sdk.images.edit(
           {
-            model: model.id,
+            model: this.getModelId(model),
             image: images,
             prompt: content || ''
           },
@@ -1183,7 +1183,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
       } else {
         response = await this.sdk.images.generate(
           {
-            model: model.id,
+            model: this.getModelId(model),
             prompt: content || '',
             response_format: model.id.includes('gpt-image-1') ? undefined : 'b64_json'
           },
@@ -1233,7 +1233,7 @@ export abstract class BaseOpenAiProvider extends BaseProvider {
    */
   public async getEmbeddingDimensions(model: Model): Promise<number> {
     const data = await this.sdk.embeddings.create({
-      model: model.id,
+      model: this.getModelId(model),
       input: 'hi'
     })
     return data.data[0].embedding.length
